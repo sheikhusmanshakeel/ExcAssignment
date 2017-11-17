@@ -1,0 +1,34 @@
+hdfs dfs -rm -r /user/s1579769/data/s1579769_task1.out
+
+hadoop jar /opt/hadoop/hadoop-2.7.1/share/hadoop/tools/lib/hadoop-streaming-2.7.1.jar -input /data/assignments/ex1/webLarge.txt -output /user/s1579769/data/s1579769_task1.out -mapper task1mapper.py -file task1mapper.py -reducer task1reducer.py -file task1reducer.py -jobconf mapred.reduce.tasks=5
+
+
+
+
+
+hdfs dfs -mkdir /user/s1579769/data/output1merged
+
+hdfs dfs -getmerge -nl  /user/s1579769/data/output1 /user/s1579769/data/output1merged/mergedfile
+
+hdfs dfs -rm -r /user/s1579769/data/output2
+
+hdfs dfs -rm /user/s1579769/data/s1579769_task1.out/_SUCCESS
+
+hadoop jar /opt/hadoop/hadoop-2.7.1/share/hadoop/tools/lib/hadoop-streaming-2.7.1.jar -input /user/s1579769/data/s1579769_task1.out -output /user/s1579769/data/s1579769_task2.out -mapper task2mapper.py -file task2mapper.py -reducer task2reducer.py -file task2reducer.py -jobconf mapred.reduce.tasks=3
+
+hdfs dfs -rm /user/s1579769/data/s1579769_task1.out/_SUCCESS
+
+
+hadoop jar /opt/hadoop/hadoop-2.7.1/share/hadoop/tools/lib/hadoop-streaming-2.7.1.jar -input /user/s1579769/data/s1579769_task2.out -output /user/s1579769/data/s1579769_task3.out -mapper task3mapper.py -file task3mapper.py -reducer task3reducer.py -file task3reducer.py -jobconf mapred.reduce.tasks=1
+
+
+
+hadoop jar /opt/hadoop/hadoop-2.7.1/share/hadoop/tools/lib/hadoop-streaming-2.7.1.jar -input /user/s1579769/data/s1579769_task2.out -output /user/s1579769/data/s1579769_task4.out -mapper task4mapper.py -file task4mapper.py -reducer task4reducer.py -file task4reducer.py -jobconf mapred.reduce.tasks=5
+
+
+hadoop jar /opt/hadoop/hadoop-2.7.1/share/hadoop/tools/lib/hadoop-streaming-2.7.1.jar -input /user/s1579769/data/s1579769_task4.out -output /user/s1579769/data/s1579769_task6.out -mapper task6mapper.py -file task6mapper.py -reducer task6reducer.py -file task6reducer.py -jobconf mapred.reduce.tasks=1
+
+
+hadoop jar /opt/hadoop/hadoop-2.7.1/share/hadoop/tools/lib/hadoop-streaming-2.7.1.jar -input /data/assignments/ex1/matrixLarge.txt -output /user/s1579769/data/s1579769_task7.out -mapper task7mapper.py -file task7mapper.py -reducer task7reducer.py -file task7reducer.py -jobconf mapred.reduce.tasks=7
+
+
